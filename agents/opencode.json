@@ -1,0 +1,25 @@
+{
+  "name": "opencode",
+  "executable": "opencode",
+  "args": [],
+  "env": {},
+  "requiredOnBootstrap": false,
+  "lifecycle": {
+    "install": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "opencode-ai"
+      ]
+    },
+    "upgrade": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "opencode-ai"
+      ]
+    }
+  }
+}

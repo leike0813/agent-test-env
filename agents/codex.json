@@ -1,0 +1,25 @@
+{
+  "name": "codex",
+  "executable": "codex",
+  "args": [],
+  "env": {},
+  "requiredOnBootstrap": false,
+  "lifecycle": {
+    "install": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "@openai/codex"
+      ]
+    },
+    "upgrade": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "@openai/codex"
+      ]
+    }
+  }
+}

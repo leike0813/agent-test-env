@@ -1,0 +1,7 @@
+.managed-prefix/
+.vscode/
+.codex/
+.history/
+
+node_modules/
+tmp/

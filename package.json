@@ -1,0 +1,18 @@
+{
+  "name": "agent-test-env",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Managed-prefix isolated runtime for launching Agent CLIs",
+  "scripts": {
+    "bootstrap": "node ./bin/agent-env.mjs bootstrap",
+    "install": "node ./bin/agent-env.mjs install",
+    "start": "node ./bin/agent-env.mjs start",
+    "upgrade": "node ./bin/agent-env.mjs upgrade",
+    "install-agent": "node ./bin/agent-env.mjs install",
+    "start-agent": "node ./bin/agent-env.mjs start",
+    "upgrade-agent": "node ./bin/agent-env.mjs upgrade",
+    "test": "node --test",
+    "typecheck": "node ./scripts/typecheck.mjs"
+  }
+}

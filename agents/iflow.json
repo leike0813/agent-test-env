@@ -1,0 +1,25 @@
+{
+  "name": "iflow",
+  "executable": "iflow",
+  "args": [],
+  "env": {},
+  "requiredOnBootstrap": false,
+  "lifecycle": {
+    "install": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "@iflow-ai/iflow-cli"
+      ]
+    },
+    "upgrade": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "@iflow-ai/iflow-cli"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "gemini",
+  "executable": "gemini",
+  "args": [],
+  "env": {},
+  "requiredOnBootstrap": false,
+  "lifecycle": {
+    "install": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "@google/gemini-cli"
+      ]
+    },
+    "upgrade": {
+      "command": "npm",
+      "args": [
+        "install",
+        "-g",
+        "@google/gemini-cli"
+      ]
+    }
+  }
+}

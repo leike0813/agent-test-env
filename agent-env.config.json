@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "managedPrefix": {
+    "root": ".managed-prefix",
+    "binDir": "bin",
+    "configDir": "home/default/.config",
+    "stateDir": "state",
+    "logsDir": "logs",
+    "metadataDir": "metadata",
+    "homeDir": "home"
+  },
+  "agentsDir": "agents",
+  "agents": {}
+}
