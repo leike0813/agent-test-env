@@ -126,7 +126,6 @@
 
 #### Simulated Frontend View (Markdown)
 - Assistant: 我先简单了解一下你的基本情况，便于更好地倾听你：你的年龄段、职业、性别可以简单说说吗？如果不方便回答某些项也没关系。
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### codex-interactive#2
@@ -156,7 +155,6 @@
 
 #### Simulated Frontend View (Markdown)
 - Assistant: 谢谢你分享这些信息。我想更好地了解你：最近有没有遇到让你感到困扰或烦心的事情？如果有，愿意简单说说吗？如果不方便细说也没关系。
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### codex-interactive#3
@@ -346,7 +344,6 @@
 
 #### Simulated Frontend View (Markdown)
 - Assistant: 您好！我是一个旨在帮助您排解烦恼的助手。在开始之前，为了能更好地理解您的情况，请问您方便告诉我您的性别、年龄和职业吗？请放心，您提供的信息只会用于本次对话，并且不会涉及任何个人隐私。
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### gemini-interactive#2
@@ -385,7 +382,6 @@
 - Assistant: 好的，我了解了，一位38岁的男性工程师。谢谢您分享这些信息。
 
 接下来，我想用温柔且体贴的语气问问您，最近有没有遇到一些烦心事或者被某些烦恼所困扰呢？请您放心地告诉我，我会尽力帮助您。
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### gemini-interactive#3
@@ -428,7 +424,6 @@
 1.  **拥抱AI，成为AI的“驾驭者”：** 人工智能更擅长重复性、模式化的编码工作，而人类工程师的价值在于更高层次的逻辑设计、系统架构、创新思考和复杂问题的解决。学习如何有效地利用AI工具（例如代码生成、代码审查工具）来提高工作效率，将AI作为您的助手，而不是竞争对手。这能让您从繁琐的编码中解放出来，专注于更有价值的工作。
 
 2.  **深耕软技能和跨领域知识：** AI目前还难以替代人类的沟通、协作、领导力、创造力、批判性思维和情商等“软技能”。同...
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### gemini-interactive#4
@@ -570,7 +565,6 @@
 
 
 Script started on 2026-02-22 07:51:18+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '65535' '-e' 'trace=write' '-e' 'write=1,2' ...
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### iflow-interactive#2
@@ -613,7 +607,6 @@ Script started on 2026-02-22 07:51:18+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '
 demo-interactive-skill 已成功完成交互。该技能演示了如何通过问答形式收集用户信息并进行汇总。如果您还有其他需要，请随时告诉我！
 
 Script started on 2026-02-22 07:52:17+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '65535' '-e' 'trace=write' '-e' 'write=1,2' '-o' ...
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### iflow-interactive#3
@@ -660,7 +653,6 @@ Script started on 2026-02-22 07:52:17+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '
 
 **建议方向：**
 - 把AI当作生产力...
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### iflow-interactive#4
@@ -696,7 +688,6 @@ Script started on 2026-02-22 07:52:17+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '
 好的，祝您一切顺利！如果有其他需要随时找我。
 
 Script started on 2026-02-22 07:56:55+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '65535' '-e' 'trace=write' '-e' 'write=1,2' '-o' '/home/joshua/Workspace/Code/JavaScript/agent-test-env/.managed-prefix/runs/20260221T235118-iflow-bbac1fda/...
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### iflow-interactive#5
@@ -861,7 +852,6 @@ Script started on 2026-02-22 07:57:55+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '
 - Assistant: 您好！我是您的心理疏导助手，很高兴能为您服务。
 
 为了让我的建议更贴合您的实际情况，能先简单介绍一下您自己吗？比如您的年龄段、职业类型，或者您目前的身份（比如学生、上班族等）？这些信息能帮我更好地理解您的处境。当然，您不必透露任何让您感到不舒服的个人信息。
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### opencode-interactive#2
@@ -898,7 +888,6 @@ Script started on 2026-02-22 07:57:55+08:00 [COMMAND="'strace' '-f' '-yy' '-s' '
 - Assistant: 感谢您的分享！作为一名38岁的工程师，我想您在工作中一定承担着不少责任，也许还面临着技术更新、项目压力或者职业发展方面的思考。
 
 我想用朋友的身份问问您：最近有什么事情让您感到困扰或者心里不太舒畅吗？无论是工作上的压力、生活中的琐事，还是人际关系方面的烦恼，都可以跟我聊聊。有时候，把心里的事情说出来，本身就是一种释放。我会认真倾听，并尽力给您一些有帮助的建议。
-- System: Provide next user turn
 - System: (请输入下一步指令...)
 
 ### opencode-interactive#3
