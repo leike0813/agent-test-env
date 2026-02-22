@@ -6,13 +6,10 @@ TBD - created by archiving change single-agent-lifecycle-commands. Update Purpos
 ### Requirement: Single-process start orchestration
 The system MUST orchestrate start execution for exactly one selected agent and return process exit status for that single process.
 
-#### Scenario: Successful single-agent process
-- **WHEN** the selected agent process exits with code 0
-- **THEN** the start command returns exit code 0
-
-#### Scenario: Failing single-agent process
-- **WHEN** the selected agent process exits non-zero or fails before spawn
-- **THEN** the start command returns non-zero and emits failure diagnostics
+#### Scenario: Start option parsing includes translate mode
+- **WHEN** user runs start with command options before `<agent-name>`
+- **THEN** orchestration MUST parse `--run-dir`, `--config`, and `--translate`
+- **AND** MUST pass only agent passthrough args (excluding start-only options) into spawned process args
 
 ### Requirement: Isolation validation before start spawn
 The system SHALL validate isolation paths before spawning the selected agent process.
