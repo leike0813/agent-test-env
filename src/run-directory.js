@@ -12,6 +12,7 @@ import { isPathInsideRoot } from "./path-utils.js";
 
 const FULL_RUN_ID_PATTERN = /^\d{8}T\d{6}(?:Z)?-[A-Za-z0-9_-]+-[0-9a-f]{8}$/;
 const SHORT_RUN_ID_PATTERN = /^[0-9a-f]{8}$/i;
+const ATTEMPTED_META_PATTERN = /^meta\.(\d+)\.json$/;
 
 function nowTimestampForId() {
   const now = new Date();
@@ -85,6 +86,44 @@ async function readRunMetadata(metaPath) {
     throw new Error(`Invalid run metadata format at ${metaPath}`);
   }
   return /** @type {Record<string, unknown>} */ (parsed);
+}
+
+/**
+ * @param {string} auditDirectory
+ */
+async function resolveRunMetadataPath(auditDirectory) {
+  let entries = [];
+  try {
+    entries = await readdir(auditDirectory, { withFileTypes: true });
+  } catch (error) {
+    if (error instanceof Error && String(error.message).includes("ENOENT")) {
+      throw new Error(`Existing run directory is missing required audit directory: ${auditDirectory}`);
+    }
+    throw error;
+  }
+
+  let highestAttempt = 0;
+  let highestAttemptName = "";
+  for (const entry of entries) {
+    if (!entry.isFile()) {
+      continue;
+    }
+    const matched = entry.name.match(ATTEMPTED_META_PATTERN);
+    if (!matched) {
+      continue;
+    }
+    const attempt = Number.parseInt(matched[1], 10);
+    if (Number.isInteger(attempt) && attempt > highestAttempt) {
+      highestAttempt = attempt;
+      highestAttemptName = entry.name;
+    }
+  }
+
+  if (highestAttempt > 0) {
+    return path.join(auditDirectory, highestAttemptName);
+  }
+
+  return path.join(auditDirectory, "meta.json");
 }
 
 /**
@@ -222,10 +261,11 @@ export async function resolveExistingRunDirectory(options) {
   }
 
   const auditDirectory = path.join(runDirectory, ".audit");
-  const metadata = await readRunMetadata(path.join(auditDirectory, "meta.json"));
+  const metadataPath = await resolveRunMetadataPath(auditDirectory);
+  const metadata = await readRunMetadata(metadataPath);
   const boundAgentName = readMetadataAgentName(metadata);
   if (!boundAgentName) {
-    throw new Error(`Run metadata is missing agent binding in ${path.join(auditDirectory, "meta.json")}`);
+    throw new Error(`Run metadata is missing agent binding in ${metadataPath}`);
   }
 
   if (boundAgentName !== options.agentName) {

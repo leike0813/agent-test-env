@@ -42,8 +42,17 @@ function assertCommandAvailable(command, args) {
  *   stdinSource?: NodeJS.ReadableStream;
  *   stdout: NodeJS.WritableStream;
  *   stderr: NodeJS.WritableStream;
+ *   forwardRuntimeOutput?: boolean;
+ *   forcePipedStdio?: boolean;
  *   auditDirectory: string;
- *   appendAuditLogs?: boolean;
+ *   auditPaths?: {
+ *     stdinPath: string;
+ *     stdoutPath: string;
+ *     stderrPath: string;
+ *     ptyOutputPath: string;
+ *     ptyTimingPath: string;
+ *     tracePath: string;
+ *   };
  }} options
  */
 export async function runPtyAuditedCommand(options) {
@@ -57,16 +66,15 @@ export async function runPtyAuditedCommand(options) {
   assertCommandAvailable(tracerCommand, ["-V"]);
   assertCommandAvailable(scriptCommand, ["--version"]);
 
-  const stdinPath = path.join(options.auditDirectory, "stdin.log");
-  const ptyOutputPath = path.join(options.auditDirectory, "pty-output.log");
-  const ptyTimingPath = path.join(options.auditDirectory, "pty-timing.log");
-  const tracePath = path.join(options.auditDirectory, "fd-trace.log");
-  const stdoutPath = path.join(options.auditDirectory, "stdout.log");
-  const stderrPath = path.join(options.auditDirectory, "stderr.log");
+  const stdinPath = options.auditPaths?.stdinPath ?? path.join(options.auditDirectory, "stdin.log");
+  const ptyOutputPath = options.auditPaths?.ptyOutputPath ?? path.join(options.auditDirectory, "pty-output.log");
+  const ptyTimingPath = options.auditPaths?.ptyTimingPath ?? path.join(options.auditDirectory, "pty-timing.log");
+  const tracePath = options.auditPaths?.tracePath ?? path.join(options.auditDirectory, "fd-trace.log");
+  const stdoutPath = options.auditPaths?.stdoutPath ?? path.join(options.auditDirectory, "stdout.log");
+  const stderrPath = options.auditPaths?.stderrPath ?? path.join(options.auditDirectory, "stderr.log");
 
   const traceArgs = [
     "-f",
-    ...(options.appendAuditLogs ? ["-A"] : []),
     "-yy",
     "-s",
     "65535",
@@ -82,7 +90,6 @@ export async function runPtyAuditedCommand(options) {
   ];
   const traceCommand = commandLineString(tracerCommand, traceArgs);
   const scriptArgs = [
-    ...(options.appendAuditLogs ? ["-a"] : []),
     "-qef",
     "--log-in",
     stdinPath,
@@ -94,7 +101,8 @@ export async function runPtyAuditedCommand(options) {
     traceCommand,
   ];
 
-  const interactive = isInteractiveTerminal(options);
+  const interactive = isInteractiveTerminal(options) && options.forcePipedStdio !== true;
+  const forwardRuntimeOutput = options.forwardRuntimeOutput !== false;
   const stdio = interactive ? "inherit" : "pipe";
 
   return new Promise((resolve) => {
@@ -150,6 +158,7 @@ export async function runPtyAuditedCommand(options) {
       started = true;
       options.stderr.write(`[agent:${options.label}] status=started\n`);
       options.stderr.write(`[agent:${options.label}] runtime=pty script=${scriptCommand} tracer=${tracerCommand}\n`);
+      options.stderr.write(`[agent:${options.label}] ---------------- runtime begin ----------------\n`);
 
       for (const signal of /** @type {NodeJS.Signals[]} */ (["SIGINT", "SIGTERM"])) {
         const listener = () => {
@@ -191,7 +200,7 @@ export async function runPtyAuditedCommand(options) {
       }
     });
 
-    if (!interactive) {
+    if (!interactive && forwardRuntimeOutput) {
       child.stdout?.on("data", (chunk) => options.stdout.write(chunk));
       child.stderr?.on("data", (chunk) => options.stderr.write(chunk));
     }

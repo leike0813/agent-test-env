@@ -8,6 +8,7 @@
     "bootstrap": "node ./bin/agent-env.mjs bootstrap",
     "install": "node ./bin/agent-env.mjs install",
     "start": "node ./bin/agent-env.mjs start",
+    "resume": "node ./bin/agent-env.mjs resume",
     "upgrade": "node ./bin/agent-env.mjs upgrade",
     "install-agent": "node ./bin/agent-env.mjs install",
     "start-agent": "node ./bin/agent-env.mjs start",
