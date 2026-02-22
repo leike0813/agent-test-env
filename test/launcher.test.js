@@ -754,6 +754,7 @@ test("start mode 3 shows user-input helper when task is not completed", async (t
   });
   assert.equal(result.exitCode, 0);
   assert.match(out.text(), /\(请输入下一步指令\.\.\.\)/);
+  assert.doesNotMatch(out.text(), /Provide next user turn/);
 });
 
 test("runtime separators are emitted for all translate modes", async (t) => {

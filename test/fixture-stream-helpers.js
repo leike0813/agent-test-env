@@ -702,10 +702,6 @@ export async function writeFixtureReport(rows) {
       }
 
       if (envelope.type === "user.input.required") {
-        const prompt = typeof envelope.data.prompt === "string" ? envelope.data.prompt : "";
-        if (prompt.length > 0) {
-          rendered.push(`System: ${prompt}`);
-        }
         rendered.push("System: (请输入下一步指令...)");
         continue;
       }

@@ -544,10 +544,6 @@ function buildFrontendLines(envelopes) {
       continue;
     }
     if (envelope.type === "user.input.required") {
-      const prompt = typeof envelope.data.prompt === "string" ? envelope.data.prompt.trim() : "";
-      if (prompt.length > 0) {
-        lines.push(`System: ${prompt}`);
-      }
       lines.push("System: (请输入下一步指令...)");
       continue;
     }
