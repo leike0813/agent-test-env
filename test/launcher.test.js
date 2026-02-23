@@ -721,6 +721,36 @@ test("translate mode 2 suppresses raw echo blocks duplicated from assistant mess
   assert.ok(suppressedDiagnostic);
 });
 
+test("iflow parser prefers split streams and avoids duplicating PTY echo", () => {
+  const splitMessage = [
+    "请先简单介绍一下你自己。",
+    "我会根据你的回答继续下一步。",
+  ].join("\n");
+  const artifacts = buildTranslateArtifacts({
+    runId: "run-iflow-dedup",
+    attemptNumber: 1,
+    agentName: "iflow",
+    session: {
+      field: "session-id",
+      value: "session-1",
+      source: "stdout",
+    },
+    completion: {
+      state: "awaiting_user_input",
+      reasonCode: "TERMINAL_SIGNAL_WITHOUT_DONE_MARKER",
+    },
+    stdoutText: splitMessage,
+    stderrText: "",
+    ptyText: `${splitMessage}\n<Execution Info>\n{\"session-id\":\"session-1\"}\n</Execution Info>\n`,
+    translateMode: 1,
+  });
+
+  assert.equal(artifacts.parsed.parser, "iflow_text");
+  assert.equal(artifacts.parsed.assistantMessages.length, 1);
+  assert.equal(artifacts.parsed.assistantMessages[0], splitMessage);
+  assert.equal(artifacts.parsed.assistantMessages[0].includes("<Execution Info>"), false);
+});
+
 test("start mode 3 shows user-input helper when task is not completed", async (t) => {
   const projectRoot = await createTempProject(t);
   const config = baseConfig();

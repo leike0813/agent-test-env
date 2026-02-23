@@ -240,10 +240,15 @@ function parseGemini(logs) {
  * @param {{ stdout: string; stderr: string; pty: string }} logs
  */
 function parseIflow(logs) {
-  const merged = `${logs.stdout}\n${logs.stderr}\n${logs.pty}`;
-  const cleaned = stripRuntimeScriptEnvelope(merged)
+  const splitMerged = `${logs.stdout}\n${logs.stderr}`;
+  const cleanedSplit = stripRuntimeScriptEnvelope(splitMerged)
     .replace(/<Execution Info>[\s\S]*?<\/Execution Info>/gu, "")
     .trim();
+  const cleanedPty = stripRuntimeScriptEnvelope(logs.pty)
+    .replace(/<Execution Info>[\s\S]*?<\/Execution Info>/gu, "")
+    .trim();
+  const usePtyFallback = cleanedSplit.length === 0 && cleanedPty.length > 0;
+  const cleaned = usePtyFallback ? cleanedPty : cleanedSplit;
 
   /** @type {string[]} */
   const assistantMessages = [];
@@ -253,6 +258,9 @@ function parseIflow(logs) {
 
   /** @type {string[]} */
   const diagnostics = [];
+  if (usePtyFallback) {
+    diagnostics.push("PTY_FALLBACK_USED");
+  }
   if (splitNonEmptyLines(logs.stdout).length > 0 && splitNonEmptyLines(logs.stderr).length > 0) {
     diagnostics.push("IFLOW_CHANNEL_DRIFT_OBSERVED");
   }
